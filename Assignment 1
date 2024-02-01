@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>Assignment 1</title>
+  <style>
+    body {font-family: Arial, Helvetica, sans-serif;}
+  </style>
+</head>
+
+<body>
+  <main>
+    <h1 class="title">About Me</h1>
+    <p>My name is Kevin Zong and I was born in New York, but grew up in Rhode Island. I am a student at the Harvard Extension School where I am majoring in Business Admin and Management. I am also pursuing minors in Computer Science and Digital Media. Currently, I am working and living in Singapore.</p>
+    <p>My web development background stems from HES, where I have taken several courses on HTML, CSS, JS and PHP. With these studies, I created a website for my mother's small business.</p>
+    <p>My experience in software development is extremely limited, though, having only taken a single course on Python.</p>
+    <p>I was interested in taking this course because I enjoyed working in JS. A lot of the work felt like puzzle-solving, and that was what made it fun for me. Single Page Web Applications are interesting to me because I use them extremely frequently in my day-to-day. There is a lot of functionality that can be found in SPAs which has me curious as to how they are built.</p>
+    <img src="https://www.toursingapore.net.vn/images/singapore/diadiem/Dempsey-Hill-5.jpg" alt="Dempsey Hill" width="500" height="300">
+    <p>This one of my favorite restaurants, <a href="https://www.pscafe.com/pscafe-at-harding-road/">P.S. Cafe</a>, in one of my favorite parts of Singapore, Dempsey Hill.</p>
+    
+    
+  </main>
+</body>
+
+</html>
