@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Tic-Tac-Toe 2</title>
+    <style>
+        .square {
+            border: 1px solid black;
+            text-align: center;
+            padding-top: 40%;
+        }
+
+        .square:hover {
+            background-color: mintcream;
+        }
+
+        #boxes {
+            display: grid;
+            grid-template-columns: 100px 100px 100px;
+            grid-template-rows: 100px 100px 100px;
+            row-gap: 5px;
+            column-gap: 5px;
+        }
+
+        #turn {
+            border: 1px solid black;
+            width: fit-content;
+            padding: 5px;
+        }
+
+        #winner {
+            border: 1px solid black;
+            width: fit-content;
+            padding: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Tic-Tac-Toe</h1>
+    <div id="boxes">
+        <script>
+            const NUM_SQUARES = 9;
+            for (i = 0; i < NUM_SQUARES; i++) {
+                id = "sq" + i;
+                document.write("<div class='square' id='" + id + "'></div>");
+            }
+        </script>
+    </div>
+    <br>
+    <p id="turn">It is now ___'s turn</p>
+    <div id="winner">
+        This is where the winner is revealed
+    </div>
+</body>
+
+</html>
