@@ -1,0 +1,119 @@
+<!-- Coded myself into a corner - got stuck on trying to use map() - not enough time for me to try to salvage this! -->
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Tic-Tac-Toe 5</title>
+    <style>
+        .square {
+            border: 1px solid black;
+            text-align: center;
+            padding-top: 40%;
+        }
+
+        .square:hover {
+            background-color: mintcream;
+        }
+
+        #boxes {
+            display: grid;
+            grid-template-columns: 100px 100px 100px;
+            grid-template-rows: 100px 100px 100px;
+            row-gap: 5px;
+            column-gap: 5px;
+        }
+
+        #turnDiv {
+            border: 1px solid black;
+            width: fit-content;
+            padding: 5px;
+        }
+
+        #winner {
+            border: 1px solid black;
+            width: fit-content;
+            padding: 10px;
+        }
+
+        #turn {
+            white-space: nowrap;
+        }
+    </style>
+
+</head>
+
+<body>
+    <h1>Tic-Tac-Toe</h1>
+    <div id="boxes">
+        <script>
+            var clicks = 0;
+            function gameStart() {
+                clicks = 0 + Math.round(Math.random());
+                console.log("game start " + clicks)
+                // not proud of this bit but it works
+                document.getElementById("sq0").innerHTML = "";
+                document.getElementById("sq1").innerHTML = "";
+                document.getElementById("sq2").innerHTML = "";
+                document.getElementById("sq3").innerHTML = "";
+                document.getElementById("sq4").innerHTML = "";
+                document.getElementById("sq5").innerHTML = "";
+                document.getElementById("sq6").innerHTML = "";
+                document.getElementById("sq7").innerHTML = "";
+                document.getElementById("sq8").innerHTML = "";
+                if (clicks % 2 == 0) {
+                    console.log("it is X's turn")
+                    document.getElementById("turn").innerHTML = "It is X's turn";
+                }
+                if (clicks % 2 != 0) {
+                    console.log("O's turn")
+                    document.getElementById("turn").innerHTML = "It is O's turn";
+                }
+                console.log("game start")
+                console.log(clicks)
+            }
+            const NUM_SQUARES = 9;
+            for (i = 0; i < NUM_SQUARES; i++) {
+                id = "sq" + i;
+                document.write("<div class='square' id='" + id + "' onclick='sqFunction()'></div>");
+            }
+
+
+        </script>
+    </div>
+    <br>
+    <br>
+    <button onclick="gameStart()">Start Game</button>
+    <br>
+    <div id="turnDiv">
+        <p id="turn">Please start a new game</p>
+
+    </div>
+    <br>
+    <div id="winner">
+        This is where the winner is revealed
+    </div>
+
+    <script>
+
+        function sqFunction() {
+            let sqId = event.target.id
+            if (document.getElementById(sqId).innerHTML == "") {
+                clicks += 1;
+                if (clicks % 2 == 0) {
+                    document.getElementById(sqId).innerHTML = "O";
+                    document.getElementById("turn").innerHTML = "It is X's turn";
+                }
+                else {
+                    document.getElementById(sqId).innerHTML = "X";
+                    document.getElementById("turn").innerHTML = "It is O's turn";
+                }
+
+            }
+        }
+
+    </script>
+</body>
+
+</html>
