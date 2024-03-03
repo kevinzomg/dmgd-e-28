@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Joe's Hotdogs</title>
+</head>
+
+<body>
+    <script>
+        food = [];
+        food["hotdog"] = 4
+        food["fries"] = 3.5
+        food["soda"] = 1.5
+        food["sauerkraut"] = 1
+        // for (key in food) {
+        //     document.write(key + " $" + food[key] + "<br>");
+        // }
+        foodObj = {
+            "hotdog": 4,
+            "fries": 3.5,
+            "soda": 1.5,
+            "sauerkraut": 1
+        };
+        strfoodObj = JSON.stringify(foodObj);
+        document.write(strfoodObj + "<br>");
+
+        function Food(name, price) {
+            this.name = name
+            this.price = price
+            this.show = function () { return this.name + " $" + this.price }
+        }
+        foods = [new Food('hotdog', 4), new Food('fries', 3.5), new Food('soda', 1.5), new Food('sauerkraut', 1)]
+        document.write(foods.map(f => f.show()).join('<br>'))
+    </script>
+</body>
+
+</html>
