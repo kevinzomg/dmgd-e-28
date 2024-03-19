@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html onclick="focusFunction()">
+
+<head>
+    <meta charset="utf-8">
+    <title>Wurdle</title>
+    <style>
+        html {
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        body {
+            align-content: center;
+            margin: auto;
+            width: 540px;
+        }
+
+        #game>div {
+            display: grid;
+            grid-template-columns: 100px 100px 100px 100px 100px;
+            grid-template-rows: 100px 10px;
+            row-gap: 0px;
+            column-gap: 5px;
+            padding-top: 10px;
+
+            width: fit-content;
+            padding-left: 10px;
+            padding-right: 10px;
+            align-content: center;
+            margin: auto;
+            /* width: 50%; */
+        }
+
+        h1 {
+            width: fit-content;
+        }
+
+        .row {
+            font-size: 40px;
+        }
+
+        /* .message {
+            display: grid;
+            grid-template-columns: 100px 100px 100px 100px 100px;
+            grid-template-rows: 100px 10px;
+            row-gap: 0px;
+            column-gap: 5px;
+            padding-top: 10px;
+            font-size: 40px;
+            width: fit-content;
+            padding-left: 10px;
+            padding-right: 10px;
+            align-content: center;
+            margin: auto;
+        } */
+
+        .square {
+            border: 1px solid black;
+            text-align: center;
+            padding-top: 25%;
+        }
+
+        .currentRow {
+            background-color: lightgrey;
+        }
+
+        .pastRow {
+            background-color: gray;
+        }
+
+        .y {
+            background-color: greenyellow;
+        }
+
+        .n {
+            background-color: red;
+        }
+
+        .m {
+            background-color: yellow;
+        }
+
+        .win {
+            background-color: greenyellow;
+        }
+    </style>
+</head>
+
+<body onload="loadFunction()">
+    <h1>Wurdle</h1>
+    <button onclick="showAnswer();">Debug mode</button>
+    <div id="game" style="display:none;">
+        <div class="row" id="row1">
+            <div class="square" id="sq1"></div>
+            <div class="square" id="sq2"></div>
+            <div class="square" id="sq3"></div>
+            <div class="square" id="sq4"></div>
+            <div class="square" id="sq5"></div>
+        </div>
+        <div class="row" id="row2">
+            <div class="square" id="sq6"></div>
+            <div class="square" id="sq7"></div>
+            <div class="square" id="sq8"></div>
+            <div class="square" id="sq9"></div>
+            <div class="square" id="sq10"></div>
+        </div>
+        <div class="row" id="row3">
+            <div class="square" id="sq11"></div>
+            <div class="square" id="sq12"></div>
+            <div class="square" id="sq13"></div>
+            <div class="square" id="sq14"></div>
+            <div class="square" id="sq15"></div>
+        </div>
+        <div class="row" id="row4">
+            <div class="square" id="sq16"></div>
+            <div class="square" id="sq17"></div>
+            <div class="square" id="sq18"></div>
+            <div class="square" id="sq19"></div>
+            <div class="square" id="sq20"></div>
+        </div>
+        <div class="row" id="row5">
+            <div class="square" id="sq21"></div>
+            <div class="square" id="sq22"></div>
+            <div class="square" id="sq23"></div>
+            <div class="square" id="sq24"></div>
+            <div class="square" id="sq25"></div>
+        </div>
+        <div class="row" id="row6">
+            <div class="square" id="sq26"></div>
+            <div class="square" id="sq27"></div>
+            <div class="square" id="sq28"></div>
+            <div class="square" id="sq29"></div>
+            <div class="square" id="sq30"></div>
+        </div>
+        <div id="win" class="message" style="display:none;">
+            <h3>You win!</h3>
+            <button onclick="window.location.reload();">Play again?</button>
+        </div>
+        <div id="lose" class="message" style="display:none;">
+            <h3>You lose!</h3>
+            <h3 id="solution"></h3>
+            <button onclick="window.location.reload();">Play again?</button>
+        </div>
+        <div>
+
+        </div>
+        <div id="theWord" style="display:none;"></div>
+    </div>
+
+
+    <div>
+        <form>
+            <input id="answer" type="text" name="answer" onkeydown="keyDown(); return false;" style="opacity:0;">
+
+        </form>
+
+    </div>
+    <script>
+        if (document.hasFocus()) {
+            focusFunction();
+        }
+        let splitString = [];
+        var string = "";
+        var word = new XMLHttpRequest();
+        word.open("GET", "https://random-word-api.herokuapp.com/word?length=5", true);
+        word.onreadystatechange = function () {
+            if (word.readyState == 4) {
+                // console.log(word.responseText);
+                string = JSON.parse(word.responseText);
+                // console.log(string);
+                document.getElementById("theWord").innerHTML = string;
+                document.getElementById("game").style.display = "block";
+                focusFunction();
+                splitString = string[0].split("");
+                // console.log(splitString);
+                return splitString;
+            };
+        };
+        word.send();
+        // ------------------------------------------------------
+        // This is a backup API, in case the above one crashes (which it has in the past)
+        // The word choice is really bad in comparison
+        //-------------------------------------------------------
+        // let splitString = [];
+        // var word = new XMLHttpRequest();
+        // word.open("GET", "https://random-word.ryanrk.com/api/en/word/random/?length=5", true);
+        // word.onreadystatechange = function () {
+        //     if (word.readyState == 4) {
+        //         console.log(word.responseText);
+        //         var string = JSON.parse(word.responseText);
+        //         lowerString = string[0].toLowerCase();
+        //         console.log(lowerString);
+        //         document.getElementById("theWord").innerHTML = lowerString;
+        //         splitString.push(lowerString.split(""));
+        //         console.log(splitString);
+        //         return splitString;
+        //     };
+        // };
+        // word.send();
+        function showAnswer() {
+            document.getElementById("theWord").style.display = "block";
+        }
+        var rowCount = 0
+        function loadFunction() {
+            // console.log("loaded");
+            rowCount++;
+            if (rowCount == 7) {
+                // console.log("out of guesses");
+                document.getElementById("row" + (rowCount - 1)).setAttribute("class", "pastRow row");
+                document.getElementById("solution").innerHTML = "The answer was: " + string;
+                gameOver();
+            }
+            else {
+                rowChange();
+            }
+        }
+        function focusFunction() {
+            document.getElementById("answer").focus();
+        }
+        function rowChange() {
+            document.getElementById("row" + rowCount).setAttribute("class", "currentRow row",);
+            if (rowCount > 1) {
+                document.getElementById("row" + (rowCount - 1)).setAttribute("class", "pastRow row");
+            }
+        }
+        function gameOver() {
+            document.getElementById("lose").style.display = "block";
+        }
+        var typed = [];
+        var guess = [];
+        function keyDown() {
+            if (event.keyCode >= 65 && event.keyCode <= 90 && typed.length <= 4) {
+                // console.log(event.key);
+                typed.push(event.key.toLowerCase());
+                // console.log(typed);
+                document.getElementById("sq" + (typed.length + (rowCount * 5) - 5)).innerHTML = typed[typed.length - 1];
+            }
+            if (event.keyCode == 8) {
+                typed.pop();
+                // console.log(typed);
+                document.getElementById("sq" + (typed.length + (rowCount * 5) - 4)).innerHTML = "";
+            }
+            if (event.keyCode == 13 && typed.length == 5) {
+                // console.log("looking for: " + splitString.join(""));
+                // console.log("currently have: " + typed.join(""));
+
+                if (typed.join("") == splitString.join("")) {
+                    // console.log("win");
+                    document.getElementById("row" + (rowCount)).setAttribute("class", "win row");
+                    document.getElementById("win").style.display = "block";
+                    document.getElementById("lose").style.display = "none !important";
+                    document.getElementById("answer").blur();
+                }
+                else {
+                    loadFunction();
+                    typed.forEach(check);
+                    function check(item, index) {
+                        if (typed[index] == splitString[index]) {
+                            guess.push("y");
+                            document.getElementById("sq" + (index + (rowCount * 5) - 9)).setAttribute("class", "square y")
+                        }
+                        else if (splitString.includes(typed[index])) {
+                            document.getElementById("sq" + (index + (rowCount * 5) - 9)).setAttribute("class", "square m")
+                        }
+                        else {
+                            guess.push("n");
+                            document.getElementById("sq" + (index + (rowCount * 5) - 9)).setAttribute("class", "square n")
+                        }
+                    }
+                    // console.log(guess);
+                    guess = [];
+                    typed = [];
+
+                }
+            }
+        }
+
+    </script>
+</body>
+
+</html>
